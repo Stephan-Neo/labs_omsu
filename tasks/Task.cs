@@ -1,4 +1,8 @@
-using System;
+using ConsoleApp1.helpers;
+using Exit = ConsoleApp1.helpers.Exit;
+using ConsoleApp1.input;
+using ConsoleApp1.calculate;
+using Validate = ConsoleApp1.validation;
 
 namespace ConsoleApp1.tasks
 {
@@ -16,5 +20,39 @@ namespace ConsoleApp1.tasks
         public static DateTime secondStartDate = new DateTime();
         public static DateTime secondEndDate = new DateTime();
         public static bool Regex;
+
+        public static void StartTask(int n)
+        {
+            switch (n)
+            {
+                case 0:
+                    Exit.CloseProgram();
+                    break;
+
+                case 1:
+                    Hello.PrintHello();
+                    Menu.Menu.MenuPrint();
+                    break;
+                    
+                case 2:
+                    Input.InputCalculateFormula();
+                    Calculate.CalculateFormula(X, Y, Z);
+                    Menu.Menu.MenuPrint();
+                    break;
+                
+                case 3:
+                    Input.InputDate();
+                    Calculate.CalculateIntersectionDates(firstStartDate, firstEndDate, secondStartDate, secondEndDate);
+                    Calculate.CalculatePrimeNumber();
+                    Menu.Menu.MenuPrint();
+                    break;
+                    
+                case 4:
+                    Input.InputStrings();
+                    Validate.Strings.Same(stringA, stringB);
+                    Menu.Menu.MenuPrint();
+                    break;
+            }
+        }
     }
 }

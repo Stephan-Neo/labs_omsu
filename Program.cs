@@ -1,11 +1,11 @@
-﻿namespace ConsoleApp1
+﻿using ConsoleApp1.Menu;
+namespace ConsoleApp1
 {
     internal class Global
     {
         public static void Main(string[] args)
         {
-            var menu = new Menu.Menu();
-            menu.MenuPrint();
+            Menu.Menu.MenuPrint();
         }
     }
 }
