@@ -1,29 +1,46 @@
-using Task = ConsoleApp1.tasks.Task;
-using Error = ConsoleApp1.helpers.Error;
-using Validate = ConsoleApp1.validation;
+using ConsoleApp.MenuItems;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ConsoleApp1.Menu
+namespace ConsoleApp
 {
-    public class Menu: Task
+    public static class Menu
     {
-        public static void MenuPrint()
+        private static readonly List<MenuItemCore> MenuItems = new List<MenuItemCore>();
+
+        public static int ItemsCount => MenuItems.Count();
+
+        public static void ClearItems()
         {
-            Console.WriteLine($"\n[0] Exit \n[1] Hello World! \n[2] Calc: {formula} \n[3] Recursion date \n[4] Strings");
+            Menu.MenuItems.Clear();
+        }
 
-            Console.WriteLine(String.Concat(Enumerable.Repeat("-", 20)));
-            Console.Write("Input action: ");
-            string input = Console.ReadLine();
-            Console.WriteLine(String.Concat(Enumerable.Repeat("-", 20)));
+        public static void AddItem(MenuItemCore menuItem)
+        {
+            Menu.MenuItems.Add(menuItem);
+        }
 
-            if((Convert.ToString(input) != "" & input == "0") | (Convert.ToString(input) != "" & input == "1") | (Convert.ToString(input) != "" & input == "2" ) | (Convert.ToString(input) != "" & input == "3") | (Convert.ToString(input) != "" & input == "4"))
+        public static void Execute()
+        {
+            int iMenu = IOUtils.SafeReadInteger(null) - 1;
+            if (iMenu >= 0 && iMenu < Menu.MenuItems.Count)
             {
-                int action = Convert.ToInt32(input);
-                StartTask(action);
+                Menu.MenuItems.ToArray()[iMenu].Execute();
             }
             else
             {
-                Error.PirntError("Error!!! The wrong line");
-                MenuPrint();
+                Console.WriteLine("Menu item not found.");
+            }
+        }
+        public static void ShowMenu()
+        {
+            Console.WriteLine("=== MENU ===");
+
+            int iMenuItem = 1;
+            foreach (MenuItemCore menuItem in Menu.MenuItems)
+            {
+                Console.WriteLine("{0}: {1}", iMenuItem++, menuItem.Title);
             }
         }
     }
